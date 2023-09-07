@@ -1,0 +1,43 @@
+/* Calendar.css */
+
+.react-calendar .react-calendar__tile {
+  background-color: white; /* Set the background color to white */
+  color: #333 !important; /* Set the text color to a dark color */
+}
+
+/* Adjust the style of the active day if needed */
+.react-calendar .react-calendar__tile--active {
+  background-color: #007bff; /* Set the background color for the active day */
+  color: white; /* Set the text color for the active day */
+}
+
+.react-calendar {
+  border: none !important;
+}
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 0.75em;
+  text-decoration: none !important;
+  text-decoration-line: none;
+  text-decoration-skip-ink: none;
+  text-decoration-skip: none;
+  text-decoration-style: none;
+  text-underline-position: none;
+  text-underline-offset: none;
+  text-orientation: none;
+  text-justify: none;
+  text-emphasis-style: none;
+  text-emphasis-position: none;
+}
+.react-calendar__tile--active {
+  background: #006edc;
+  color: white;
+  border-radius: 50% !important;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: #e6e6e6;
+  border-radius: 50% !important;
+}
