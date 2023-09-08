@@ -16,7 +16,7 @@ export interface TodoProps {
   }
   const PAGE_SIZE = 5;
   // const TOTAL_TODOS = 100;
-    
+
 export interface TodoComponentProps{
     openTaskDetails: (todo: TodoProps) => void
     clickedDate: string
@@ -30,9 +30,9 @@ export default function TodoComponent({openTaskDetails, clickedDate}: TodoCompon
     const [isDetailsOpen, setIsDetailsOpen] = useState(false); // State to control the edit card
     const [selectedTodo, setSelectedTodo] = useState<TodoProps | null>(null); // State to store the selected todo
     const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
-   
 
-    
+
+
 
     const handleTodoClick = (todo: TodoProps) => {
         openTaskDetails(todo)
@@ -42,14 +42,14 @@ export default function TodoComponent({openTaskDetails, clickedDate}: TodoCompon
         setIsDetailsOpen(true);
         setSelectedTodoId(todo._id);
       };
-    
+
       useEffect(() => {
         const requestDate = "Today";
         console.log(clickedDate)
 if (clickedDate){
-        
+
         axios
-        
+
           .get<TodoProps[]>(`${API_ENDPOINT}/todos?date=${clickedDate}`)
           .then((response) => {
             setTodos(response.data);
@@ -58,40 +58,52 @@ if (clickedDate){
             console.error("Error fetching todos:", error);
           })}
       }, [clickedDate]);
-    
+
       const paginatedTodos = todos.slice(
         (currentPage - 1) * PAGE_SIZE,
         currentPage * PAGE_SIZE
       );
-    
+
       const toggleTodoCompletion = (todoId: number) => {
         setTodos((prevTodos) =>
           prevTodos.map((todo) => {
             if (todo._id === todoId) {
-              return {
+              const updatedTodo = {
                 ...todo,
                 completed: !todo.completed,
               };
+              console.log(updatedTodo)
+    
+             
+              axios.patch(`${API_ENDPOINT}/todos/${todoId}`, updatedTodo)
+                .then((response) => {
+                  console.log("Updated todo on the server:", response.data);
+                })
+                .catch((error) => {
+                  console.error("Error updating todo:", error);
+                });
+    
+              return updatedTodo;
             }
             return todo;
           })
         );
       };
-    
+
       const totalPages = Math.ceil(todos.length / PAGE_SIZE);
-    
+
       const goToPreviousPage = () => {
         if (currentPage > 1) {
           setCurrentPage(currentPage - 1);
         }
       };
-    
+
       const goToNextPage = () => {
         if (currentPage < totalPages) {
           setCurrentPage(currentPage + 1);
         }
       };
-    
+
     return(
         <Box p={4}>
             <Text textAlign="left" fontSize="16px" fontWeight="700" mb="2">
