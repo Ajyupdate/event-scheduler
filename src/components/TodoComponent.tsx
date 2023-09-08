@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { convertTo12HourFormat } from "./helpers/FormatTime";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { NormalizeDate } from "./helpers/NormalizeDate";
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 export interface TodoProps {
     userId: number;
@@ -13,7 +14,7 @@ export interface TodoProps {
     endTime: string;
     date: string;
   }
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
   // const TOTAL_TODOS = 100;
 
 export interface TodoComponentProps{
@@ -21,8 +22,9 @@ export interface TodoComponentProps{
     clickedDate: string
 }
 export default function TodoComponent({openTaskDetails, clickedDate}: TodoComponentProps){
-
-  console.log(clickedDate)
+  const date = new Date()
+  const todaysDate = (date.toDateString())  
+ 
     const [todos, setTodos] = useState<TodoProps[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false); // State to control the edit card
@@ -43,6 +45,7 @@ export default function TodoComponent({openTaskDetails, clickedDate}: TodoCompon
 
       useEffect(() => {
         const requestDate = "Today";
+        console.log(clickedDate)
 if (clickedDate){
 
         axios
@@ -138,7 +141,7 @@ if (clickedDate){
                       </Text>
                     </Box>
                   </Flex>
-                  <Text color={"gray.600"}>Today</Text>
+                  <Text color={"gray.600"}>{(NormalizeDate(todaysDate) === todo.date)? 'Today': todo.date}</Text>
                 </Flex>
               ))}
             </Box>
