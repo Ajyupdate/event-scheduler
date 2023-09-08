@@ -1,23 +1,29 @@
 import { Box, Card, Center, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
+
+
+
+
 export interface DateScrollProps{
-    onDateClick: (clickedDate: string) => void
+    onDateClick: (clickedDate: string,) => void
 }
 const DateScroll = ({onDateClick}: DateScrollProps) => {
   const today = new Date();
   const currentMonth = today.getMonth();
   const firstDayOfMonth = new Date(today.getFullYear(), currentMonth, 1);
+  
   const lastDayOfMonth = new Date(today.getFullYear(), currentMonth + 1, 0);
   const totalDaysInMonth = lastDayOfMonth.getDate();
 
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [clickedCard, setClickedCard] = useState<number | null>(null);
+  const [isToday, setIsToday] = useState(false)
 
   useEffect(() => {
     const calculateVisibleCards = () => {
       const containerWidth = window.innerWidth;
-
+     
       // Set a maximum width for the container (adjust as needed)
       const maxWidth = 1000;
       const numberOfCardsToShow = Math.min(
@@ -26,6 +32,7 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       );
 
       const cardsToDisplay = [];
+      console.log(today.getDate())
       let startDay = today.getDate() - Math.floor(numberOfCardsToShow / 2);
 
       if (startDay < 1) {
@@ -35,8 +42,9 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       for (let i = 0; i < numberOfCardsToShow; i++) {
         const day = startDay + i;
         cardsToDisplay.push(day);
+        
       }
-
+     
       setVisibleCards(cardsToDisplay);
     };
 
@@ -51,15 +59,18 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
   }, []);
 
   const days = [];
+  
 
   for (let day = 1; day <= totalDaysInMonth; day++) {
     const currentDate = new Date(today.getFullYear(), currentMonth, day);
-
+ 
     const dayName = currentDate.toLocaleDateString("en-US", {
       weekday: "short",
     });
+   
     const dateNumber = currentDate.getDate();
-
+  
+    
     const isCurrentDate = currentDate.toDateString() === today.toDateString();
     const isVisible = visibleCards.includes(dateNumber);
 
@@ -68,15 +79,30 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       const clickedDate = currentDate.toLocaleString("en-US", {
         weekday: "short",
         month: "short",
-        day: "numeric",
+        day: "2-digit",
         year: "numeric",
       });
 
+      const splitedClickedDate =  (clickedDate.split(' '))
+      const splitedTodaysDate = (today.toDateString().split(' '))
+     
+console.log(clickedDate)
       // Set the clicked card
       setClickedCard(dateNumber);
 
-      // Log the formatted date to the console
+      
+      
      onDateClick(clickedDate)
+    // if(splitedClickedDate[1] === splitedTodaysDate[1] &&
+    //   splitedClickedDate[3] === splitedTodaysDate[3] && 
+    //   parseInt(splitedClickedDate[2]) == parseInt(splitedTodaysDate[2])
+    //   ){
+    //     setIsToday(true)
+    //     onDateClick(clickedDate, isToday)
+    //   }else{
+    //     setIsToday(false)
+    //     onDateClick(clickedDate, isToday)
+    //   }
     };
 
     days.push(
@@ -136,9 +162,11 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       <Text textAlign="left" fontSize="16px" fontWeight="600" mb="2">
         {monthYearText}
       </Text>
-      <Flex whiteSpace="nowrap">{days}</Flex>
+      <Flex whiteSpace="nowrap" mr={2}>{days}</Flex>
     </div>
   );
 };
 
 export default DateScroll;
+
+
