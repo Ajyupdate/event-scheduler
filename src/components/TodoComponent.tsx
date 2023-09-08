@@ -68,10 +68,22 @@ if (clickedDate){
         setTodos((prevTodos) =>
           prevTodos.map((todo) => {
             if (todo._id === todoId) {
-              return {
+              const updatedTodo = {
                 ...todo,
                 completed: !todo.completed,
               };
+              console.log(updatedTodo)
+    
+             
+              axios.patch(`${API_ENDPOINT}/todos/${todoId}`, updatedTodo)
+                .then((response) => {
+                  console.log("Updated todo on the server:", response.data);
+                })
+                .catch((error) => {
+                  console.error("Error updating todo:", error);
+                });
+    
+              return updatedTodo;
             }
             return todo;
           })
