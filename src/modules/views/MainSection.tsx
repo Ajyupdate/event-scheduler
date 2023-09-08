@@ -9,15 +9,51 @@ import CalenderCard from "@/components/CalenderCard";
 import TodoComponent, { TodoProps } from "@/components/TodoComponent";
 import DetailsCard from "@/components/DetailsCard";
 import TodoEditCard from "@/components/EditTaskCard";
-
+import { NormalizeDate } from "@/components/helpers/NormalizeDate";
 export interface MainSectionProps{
     openAddCard: boolean
     closeOpenAddCard: () => void
 }
 export default function MainSection({openAddCard, closeOpenAddCard}: MainSectionProps){
-    const [inputValue, setInputValue] = useState("");
+  const date = new Date()
+  const todaysDate = (date.toDateString())  
+
+  console.log(todaysDate)
+  const inputString = "Fri Sep 08 2023";
+  // const words = todaysDate.split(' '); // Split the string into an array of words
+  // const lastWord = words.pop(); // Remove and store the last word
+  // const today = words.map(word => word + ',').join(' ') + ' ' + lastWord;
+  
+ 
+// Create a Date object from the input string
+// var dateObject = new Date(todaysDate);
+
+// // Define an array of month names
+// var monthNames = [
+//   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+//   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+// ];
+
+// // Get the day, month, and year components from the Date object
+// var day = dateObject.getDate();
+// var month = monthNames[dateObject.getMonth()];
+// var year = dateObject.getFullYear();
+
+// // Get the day of the week
+// var dayOfWeek = dateObject.toLocaleDateString("en-US", { weekday: "short" });
+
+// // Format the date with 2-digit day
+// var formattedDate = dayOfWeek + ", " + month + " " + day.toString().padStart(2, '0') + ", " + year;
+
+// // Output the formatted date
+// console.log(formattedDate);
+
+
+  const formattedDate = NormalizeDate(todaysDate)
+
+  const [inputValue, setInputValue] = useState("");
     const [openAddDrawer, setOpenAddDrawer] = useState(false)
-    const [clickedDate, setClickedDate] = useState<string>("Today");
+    const [clickedDate, setClickedDate] = useState<string>(formattedDate);
     const [todo, setTodo] = useState<TodoProps>({} as TodoProps)
 
     const [openTaskDetails, setOpenTaskDetails] = useState(false)
@@ -58,8 +94,9 @@ export default function MainSection({openAddCard, closeOpenAddCard}: MainSection
       const closeAddDrawer = () => {
           setOpenAddDrawer(false)
       }
-      const handleDateClick = (clickedDate:string) => {
+      const handleDateClick = (clickedDate:string, ) => {
         setClickedDate(clickedDate);
+
         
       };
     
