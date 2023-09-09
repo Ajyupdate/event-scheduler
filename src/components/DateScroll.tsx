@@ -32,7 +32,7 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       );
 
       const cardsToDisplay = [];
-      console.log(today.getDate())
+     
       let startDay = today.getDate() - Math.floor(numberOfCardsToShow / 2);
 
       if (startDay < 1) {
@@ -86,7 +86,7 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       const splitedClickedDate =  (clickedDate.split(' '))
       const splitedTodaysDate = (today.toDateString().split(' '))
      
-console.log(clickedDate)
+
       // Set the clicked card
       setClickedCard(dateNumber);
 

@@ -49,7 +49,7 @@ import { useRouter } from "next/navigation";
     const toast = useToast()
     const router = useRouter()
     const [editedTask, setEditedTask] = useState(todo.title);
-    const [value, onChange] = useState<Value>(new Date());
+    const [value, onChange] = useState<Value>(new Date(todo.date));
     const [loading, setLoading] = useState(false)
     const todoId = todo._id;
   const [startTime, setStartTime] = useState(todo.startTime);
@@ -110,7 +110,7 @@ import { useRouter } from "next/navigation";
     const toggleCalendar = () => {
       setCalendarOpen(!calendarOpen);
     };
-    console.log(EditedTaskObject.date);
+
   
     const handleSave = () => {
       setLoading(true)
@@ -128,8 +128,7 @@ import { useRouter } from "next/navigation";
           })
           
           
-        //   onClose();
-        //   onSave(editedTask);
+        
         })
         .catch((error) => {
           setLoading(false)
