@@ -45,7 +45,7 @@ export default function TodoComponent({openTaskDetails, clickedDate}: TodoCompon
 
       useEffect(() => {
         const requestDate = "Today";
-        console.log(clickedDate)
+        
 if (clickedDate){
 
         axios
@@ -55,7 +55,7 @@ if (clickedDate){
             setTodos(response.data);
           })
           .catch((error) => {
-            console.error("Error fetching todos:", error);
+            
           })}
       }, [clickedDate]);
 
@@ -72,15 +72,15 @@ if (clickedDate){
                 ...todo,
                 completed: !todo.completed,
               };
-              console.log(updatedTodo)
+              
     
              
               axios.patch(`${API_ENDPOINT}/todos/${todoId}`, updatedTodo)
                 .then((response) => {
-                  console.log("Updated todo on the server:", response.data);
+                  console.log("Updated todo on the server:", );
                 })
                 .catch((error) => {
-                  console.error("Error updating todo:", error);
+                  console.error("Error updating todo:", );
                 });
     
               return updatedTodo;

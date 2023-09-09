@@ -110,7 +110,7 @@ import { useRouter } from "next/navigation";
     const toggleCalendar = () => {
       setCalendarOpen(!calendarOpen);
     };
-    console.log(EditedTaskObject.date);
+
   
     const handleSave = () => {
       setLoading(true)

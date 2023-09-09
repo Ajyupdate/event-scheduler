@@ -19,6 +19,6 @@ var dayOfWeek = dateObject.toLocaleDateString("en-US", { weekday: "short" });
 var formattedDate = dayOfWeek + ", " + month + " " + day.toString().padStart(2, '0') + ", " + year;
 
 // Output the formatted date
-console.log(formattedDate);
+
 return formattedDate
 }

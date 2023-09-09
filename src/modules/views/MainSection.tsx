@@ -18,7 +18,7 @@ export default function MainSection({openAddCard, closeOpenAddCard}: MainSection
   const date = new Date()
   const todaysDate = (date.toDateString())  
 
-  console.log(todaysDate)
+  
   const inputString = "Fri Sep 08 2023";
   // const words = todaysDate.split(' '); // Split the string into an array of words
   // const lastWord = words.pop(); // Remove and store the last word

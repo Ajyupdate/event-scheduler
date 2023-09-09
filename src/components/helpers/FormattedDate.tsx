@@ -2,12 +2,11 @@ export function FormattedDate(inputDate: string) {
     let date;
     if (inputDate === "Today") {
       date = new Date();
-      console.log(date);
+      
     } else {
-      console.log(inputDate);
+     
       date = new Date(inputDate);
-      console.log(date);
-      console.log(new Date());
+      
     }
   
     // Get day, month, and year

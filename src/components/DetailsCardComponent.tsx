@@ -80,7 +80,7 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
   const [loading, setLoading] = useState(false)
   const handleDelete = (taskId: number) =>{
     setLoading(true)
-    console.log(taskId)
+   
     if(deleteTaskId){
     axios.delete(`${API_ENDPOINT}/todos/${deleteTaskId}`)
     .then(response =>{
