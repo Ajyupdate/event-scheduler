@@ -121,11 +121,12 @@ if (clickedDate){
                   _hover={{
                     bg: "gray.200",
                   }}
+                  justify={'space-between'}
                   p={4}
                   my={4}
                   // boxShadow="md"
                   key={todo._id}
-                  alignItems="center"
+                  // alignItems="center"
                   justifyContent="space-between"
                   marginBottom="4px">
                   <Flex alignItems="center">
@@ -153,14 +154,17 @@ if (clickedDate){
                       </Text>
                     </Box>
                   </Flex>
-                  <Text color={"gray.600"}>{(NormalizeDate(todaysDate) === todo.date)? 'Today': todo.date}</Text>
+                  <Flex textAlign="right">
+                    <Text color={"gray.600"}>{(NormalizeDate(todaysDate) === todo.date)? 'Today': todo.date}</Text>
+                  </Flex>
+                  
                 </Flex>
               ))}
             </Box>
 
             <Box
               mt={4}
-              display={{ md: "flex", base: "none" }}
+              display={{ md: "flex", base: "flex" }}
               justifyContent="space-between"
               alignItems="center">
               <Box>

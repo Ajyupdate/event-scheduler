@@ -13,9 +13,10 @@ export interface AddTaskprops {
   onClose: () => void;
   openAddDrawer: boolean
   closeAddDrawer: () => void
+  inputValue: string
 }
 
-const AddTask = ({ isOpen, onClose, openAddDrawer, closeAddDrawer }: AddTaskprops) => {
+const AddTask = ({ isOpen, onClose, openAddDrawer, closeAddDrawer, inputValue }: AddTaskprops) => {
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const isSmallScreen = window.innerWidth <= 800; // Adjust the screen width threshold as needed
@@ -34,6 +35,7 @@ const AddTask = ({ isOpen, onClose, openAddDrawer, closeAddDrawer }: AddTaskprop
     <Box>
       <Box display={{md: 'block', base: 'none'}}>
         <AddNewComponent
+        inputValue={inputValue}
           isOpen={isOpen}
           onClose={onClose}
           closeAddDrawer={ closeAddDrawer}
@@ -48,7 +50,7 @@ const AddTask = ({ isOpen, onClose, openAddDrawer, closeAddDrawer }: AddTaskprop
           <DrawerCloseButton />
           <DrawerHeader>Add</DrawerHeader>
           <DrawerBody>
-              <AddNewComponent isOpen={isOpen}  closeAddDrawer={ closeAddDrawer}
+              <AddNewComponent inputValue={inputValue} isOpen={isOpen}  closeAddDrawer={ closeAddDrawer}
           onClose={onClose}/>
           </DrawerBody>
         </DrawerContent>
