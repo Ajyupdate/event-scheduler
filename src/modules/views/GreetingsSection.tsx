@@ -26,7 +26,7 @@ export default function GreetingsSection({handleOpenAddCard}: IGreetingsSection)
             </Text>
           </Box>
 
-          <button onClick={handleOpenAddCard} className=" hidden md:block bg-blue-600 hover:bg-blue-400 text-white text-xs font-xs py-2 px-4 rounded-lg inline-flex items-center h-8">
+          <button onClick={handleOpenAddCard} className=" hidden md:block bg-blue-700 hover:bg-blue-400 text-white text-xs font-xs py-2 px-4 rounded-lg inline-flex items-center h-8">
             <AddIcon marginRight={2} />
             <span>Create New Task</span>
           </button>

@@ -93,16 +93,7 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
       
       
      onDateClick(clickedDate)
-    // if(splitedClickedDate[1] === splitedTodaysDate[1] &&
-    //   splitedClickedDate[3] === splitedTodaysDate[3] && 
-    //   parseInt(splitedClickedDate[2]) == parseInt(splitedTodaysDate[2])
-    //   ){
-    //     setIsToday(true)
-    //     onDateClick(clickedDate, isToday)
-    //   }else{
-    //     setIsToday(false)
-    //     onDateClick(clickedDate, isToday)
-    //   }
+
     };
 
     days.push(
@@ -122,9 +113,11 @@ const DateScroll = ({onDateClick}: DateScrollProps) => {
           <Card
             bg={
               dateNumber === clickedCard
-                ? "#FFA500"
+                // ? "#FFA500"
+                ? "blue.200"
                 : isCurrentDate
-                ? "#3F5BF6"
+                 ? "#3F5BF6"
+              
                 : ""
             }
             py={2}

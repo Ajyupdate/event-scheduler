@@ -32,17 +32,18 @@ const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
     isOpen: boolean;
     onClose: () => void;
     closeAddDrawer: () => void
-    
+    inputValue: string
   }
   type Value = ValuePiece | [ValuePiece, ValuePiece];
   const AddNewComponent = ({
     isOpen,
     onClose,
-    closeAddDrawer
-   
+    closeAddDrawer,
+    inputValue
   }: TaskDrawerprops) => {
     const toast = useToast()
-    const [task, setTask] = useState('');
+    const [task, setTask] = useState(inputValue);
+    console.log(task)
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [startTime, setStartTime] = useState("12:30");
     const [endTime, setEndTime] = useState("01:30");
