@@ -46,7 +46,7 @@ const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
     console.log(task)
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [startTime, setStartTime] = useState("12:30");
-    const [endTime, setEndTime] = useState("01:30");
+    const [endTime, setEndTime] = useState("13:30");
     const [value, onChange] = useState<Value>(new Date());
     const [preAlert, setPreAlert] = useState(true);
     const [loading, setLoading] = useState(false)
