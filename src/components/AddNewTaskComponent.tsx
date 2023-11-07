@@ -1,30 +1,24 @@
 // components/DrawerComponent.js
 
+import { BellIcon } from "@chakra-ui/icons";
 import {
-    Box,
-    Drawer,
-    DrawerBody,
-    DrawerCloseButton,
-    DrawerContent,
-    DrawerHeader,
-    DrawerOverlay,
-    Heading,
-    Flex,
-    HStack,
-    Icon,
-    Input,
-    Text,
-    Textarea,
-  } from "@chakra-ui/react";
-  import Image from "next/image";
-  import { useToast } from '@chakra-ui/react'
-  import { useState } from "react";
-  import { Spinner } from '@chakra-ui/react'
-  import { BellIcon } from "@chakra-ui/icons";
-  import Calendar from "react-calendar";
-  import { FaTimes } from "react-icons/fa";
-  import CalenderIcon from "../../public/black-calender-icon.svg";
+  Box,
+  Flex,
+  HStack,
+  Heading,
+  Icon,
+  Input,
+  Spinner,
+  Text,
+  Textarea,
+  useToast
+} from "@chakra-ui/react";
 import axios from "axios";
+import Image from "next/image";
+import { useState } from "react";
+import Calendar from "react-calendar";
+import { FaTimes } from "react-icons/fa";
+import CalenderIcon from "../../public/black-calender-icon.svg";
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
   type ValuePiece = Date | null;
   
@@ -43,7 +37,7 @@ const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
   }: TaskDrawerprops) => {
     const toast = useToast()
     const [task, setTask] = useState(inputValue);
-    console.log(task)
+  
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [startTime, setStartTime] = useState("12:30");
     const [endTime, setEndTime] = useState("13:30");
@@ -96,12 +90,15 @@ const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
       date: value,
       startTime: startTime,
       endTime: endTime,
-      completed: false
+      completed: false,
+      owner: "ajy"
     }
 
     const handleSave = () =>{
+      
       setLoading(true)
-     axios.post(`${API_ENDPOINT}/todos`, newTodoData)
+      
+     axios.post(`${API_ENDPOINT}/tasks`, newTodoData)
      .then(response => {
        setLoading(false)
        window.location.reload();
@@ -116,6 +113,7 @@ const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
      })
      .catch((error) => {
        setLoading(false)
+       console.log(error)
        toast({
         title: 'Error.',
         description: "Error Adding task. please check your internet connection and try again",
