@@ -1,24 +1,25 @@
-import { Box, Flex, HStack, Icon, Text, Modal,
+import {
+  Alert,
+  AlertIcon,
+  Box, Flex, HStack, Icon,
+  Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, 
-  Alert,
-  AlertIcon,
+  ModalOverlay,
   Spinner,
-  useToast,
-  AlertTitle,
-  AlertDescription,} from "@chakra-ui/react";
+  Text,
+  useToast
+} from "@chakra-ui/react";
 import axios from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import ClockIcon from "../../public/clock-icon.svg";
 import CalenderIcon from "./../../public/calender-icon.svg";
-import { FormattedDate } from "./helpers/FormattedDate";
 import { convertTo12HourFormat } from "./helpers/FormatTime";
+import { FormattedDate } from "./helpers/FormattedDate";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 interface ConfirmationModalProps {
@@ -82,7 +83,7 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
     setLoading(true)
    
     if(deleteTaskId){
-    axios.delete(`${API_ENDPOINT}/todos/${deleteTaskId}`)
+    axios.delete(`${API_ENDPOINT}/tasks/${deleteTaskId}`)
     .then(response =>{
       setLoading(false)
       setSuccessAlert(true)
