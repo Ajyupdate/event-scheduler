@@ -25,19 +25,18 @@ const LoginForm = () => {
   const params = queryParams.get("query");
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required("Username is required"),
+    email: yup.string().required("email is required"),
     password: yup.string().required("Password is required"),
   });
   const handleSubmit = async (
     values: any,
     { setSubmitting, setErrors }: any
   ) => {
+    console.log(values);
     try {
-      const response = await axios.post(
-        `${API_ENDPOINT}/${!params ? "client" : params}/login`,
-        values
-      );
+      const response = await axios.post(`${API_ENDPOINT}/auth/signin`, values);
 
+      console.log(response);
       const { token } = response.data;
 
       // Store the token in a cookie
@@ -52,7 +51,7 @@ const LoginForm = () => {
         duration: 9000,
         isClosable: true,
       });
-      router.push("/buy");
+      router.push("/");
     } catch (error) {
       setErrors({ password: "Invalid credentials" });
       toast({
@@ -93,7 +92,7 @@ const LoginForm = () => {
             </Heading>
           </Center>
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -107,10 +106,10 @@ const LoginForm = () => {
                     variant={"filled"}
                     as={Input}
                     type="text"
-                    name="username"
+                    name="email"
                   />
                   <Box mt={2} color="red.500" fontSize="sm">
-                    <ErrorMessage name="username" />
+                    <ErrorMessage name="email" />
                   </Box>
                 </Box>
                 <Box marginBottom="2">
