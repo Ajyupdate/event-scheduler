@@ -11,11 +11,19 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import * as yup from "yup";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
+export interface initialValuesProps {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 const SignUp = () => {
   const router = useRouter();
   const toast = useToast();
@@ -23,10 +31,51 @@ const SignUp = () => {
   const queryParams = useSearchParams();
   const params = queryParams.get("query");
 
+  const initialValues = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
+
   const validationSchema = yup.object().shape({
     username: yup.string().required("Username is required"),
+    email: yup.string().required("email is required"),
+    password: yup.string().min(8).required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password")], "Passwords must match")
+      .required("Confirm Password is required"),
   });
-  const handleSubmit = async () => {};
+  const handleSubmit = async (values: initialValuesProps) => {
+    axios
+      .post(`${API_ENDPOINT}/auth/signup`, {
+        name: values.username,
+        email: values.email,
+        password: values.password,
+      })
+      .then((response) => {
+        toast({
+          title: response.data.status,
+          description: response.data.message,
+          status: "success",
+          duration: 900,
+          isClosable: true,
+        });
+        const id = response.data.data.userId;
+
+        router.push(`/auth/verify-email?id=${id}`);
+      })
+      .catch((error) => {
+        toast({
+          title: error.response.data.status,
+          description: error.response.data.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  };
 
   return (
     <Flex
@@ -54,7 +103,7 @@ const SignUp = () => {
             </Heading>
           </Center>
           <Formik
-            initialValues={{ username: "", password: "" }}
+            initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -68,10 +117,55 @@ const SignUp = () => {
                     variant={"filled"}
                     as={Input}
                     type="text"
+                    name="email"
+                  />
+                  <Box mt={2} color="red.500" fontSize="sm">
+                    <ErrorMessage name="email" />
+                  </Box>
+                </Box>
+
+                <Box marginBottom="2">
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                    Username
+                  </Heading>
+                  <Field
+                    variant={"filled"}
+                    as={Input}
+                    type="text"
                     name="username"
                   />
                   <Box mt={2} color="red.500" fontSize="sm">
                     <ErrorMessage name="username" />
+                  </Box>
+                </Box>
+
+                <Box marginBottom="2">
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                    Password
+                  </Heading>
+                  <Field
+                    variant={"filled"}
+                    as={Input}
+                    type="password"
+                    name="password"
+                  />
+                  <Box mt={2} color="red.500" fontSize="sm">
+                    <ErrorMessage name="password" />
+                  </Box>
+                </Box>
+
+                <Box marginBottom="2">
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                    Confirm Password
+                  </Heading>
+                  <Field
+                    variant={"filled"}
+                    as={Input}
+                    type="password"
+                    name="confirmPassword"
+                  />
+                  <Box mt={2} color="red.500" fontSize="sm">
+                    <ErrorMessage name="confirmPassword" />
                   </Box>
                 </Box>
 
@@ -84,7 +178,11 @@ const SignUp = () => {
                   }`}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? <Spinner /> : "Login"}
+                  {isSubmitting ? (
+                    <Spinner size={"sm"} color="white" />
+                  ) : (
+                    "Login"
+                  )}
                 </button>
                 <Stack mt={4}>
                   <Text align={"center"}>
