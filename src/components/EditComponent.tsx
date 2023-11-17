@@ -1,28 +1,28 @@
 import {
-    Box,
-    Flex,
-    HStack,
-    Heading,
-    Icon,
-    Input,
-    
-    Text,
-    Textarea,
-    useToast,
-  } from "@chakra-ui/react";
-  import Image from "next/image";
-  import { useState } from "react";
-  import "react-calendar/dist/Calendar.css";
-  import { FaTimes } from "react-icons/fa";
+  Box,
+  Flex,
+  HStack,
+  Heading,
+  Icon,
+  Input,
+
+  Text,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
+import Image from "next/image";
+import { useState } from "react";
+import "react-calendar/dist/Calendar.css";
+import { FaTimes } from "react-icons/fa";
   // import BellIcon from "../../public/bell.svg";
-  import { Spinner } from '@chakra-ui/react'
   import { BellIcon } from "@chakra-ui/icons";
-  import axios from "axios";
+import { Spinner } from '@chakra-ui/react';
+import axios from "axios";
   
-  import Calendar from "react-calendar";
-  import CalenderIcon from "../../public/black-calender-icon.svg";
+  import { useRouter } from "next/navigation";
+import Calendar from "react-calendar";
+import CalenderIcon from "../../public/black-calender-icon.svg";
 import { TodoProps } from "./TodoComponent";
-import { useRouter } from "next/navigation";
   
   const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
@@ -115,7 +115,7 @@ import { useRouter } from "next/navigation";
     const handleSave = () => {
       setLoading(true)
       axios
-        .patch(`${API_ENDPOINT}/todos/${todo._id}`, EditedTaskObject)
+        .patch(`${API_ENDPOINT}/tasks/${todo._id}`, EditedTaskObject)
         .then((response) => {
           window.location.reload();
           setLoading(false)

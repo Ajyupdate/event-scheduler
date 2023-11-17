@@ -1,11 +1,13 @@
-import { Box, Flex, Checkbox, Heading, Text, HStack,  Input, } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
 import axios from "axios";
-import { convertTo12HourFormat } from "./helpers/FormatTime";
+import { useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import { convertTo12HourFormat } from "./helpers/FormatTime";
 import { NormalizeDate } from "./helpers/NormalizeDate";
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
+
 export interface TodoProps {
+  status: string;
     userId: number;
     _id: number;
     title: string;
@@ -13,7 +15,12 @@ export interface TodoProps {
     startTime: string;
     endTime: string;
     date: string;
+  
   }
+  export interface data{
+  status: string;
+  data: TodoProps
+}
   const PAGE_SIZE = 5;
   // const TOTAL_TODOS = 100;
 
@@ -50,12 +57,13 @@ if (clickedDate){
 
         axios
 
-          .get<TodoProps[]>(`${API_ENDPOINT}/todos?date=${clickedDate}`)
+          .get<TodoProps[]>(`${API_ENDPOINT}/tasks/ajy?date=${clickedDate}`)
           .then((response) => {
+            console.log(response)
             setTodos(response.data);
           })
           .catch((error) => {
-            
+            console.log(error)
           })}
       }, [clickedDate]);
 
