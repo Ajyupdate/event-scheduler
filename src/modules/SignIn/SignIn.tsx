@@ -33,37 +33,36 @@ const LoginForm = () => {
     { setSubmitting, setErrors }: any
   ) => {
     console.log(values);
-    try {
-      const response = await axios.post(`${API_ENDPOINT}/auth/signin`, values);
 
-      console.log(response);
-      const { token } = response.data;
-
-      // Store the token in a cookie
-      document.cookie = `token=${token}; Path=/`;
-
-      // Redirect to a protected page or perform other actions
-
-      toast({
-        title: "Success.",
-        description: "Login Successful",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
+    axios
+      .post(`${API_ENDPOINT}/auth/signin`, values)
+      .then((response) => {
+        console.log(response);
+        const { token } = response.data;
+        console.log(token);
+        // Store the token in a cookie
+        document.cookie = `token=${token}; Path=/`;
+        console.log(document.cookie);
+        toast({
+          title: response.data.status,
+          description: response.data.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        // router.push("/");
+      })
+      .catch((error) => {
+        setSubmitting(false);
+        setErrors({ password: "Invalid credentials" });
+        toast({
+          title: "Error.",
+          description: "Invalid credentials",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       });
-      router.push("/");
-    } catch (error) {
-      setErrors({ password: "Invalid credentials" });
-      toast({
-        title: "Error.",
-        description: "Invalid credentials",
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-
-    setSubmitting(false);
   };
 
   return (
