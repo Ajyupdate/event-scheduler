@@ -14,8 +14,8 @@ import {
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
 import * as yup from "yup";
-
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export interface initialValuesProps {
@@ -25,6 +25,7 @@ export interface initialValuesProps {
   confirmPassword: string;
 }
 const SignUp = () => {
+  const [isSubmit, setIsSubmit] = React.useState(false);
   const router = useRouter();
   const toast = useToast();
 
@@ -48,6 +49,7 @@ const SignUp = () => {
       .required("Confirm Password is required"),
   });
   const handleSubmit = async (values: initialValuesProps) => {
+    console.log(values);
     axios
       .post(`${API_ENDPOINT}/auth/signup`, {
         name: values.username,
@@ -55,6 +57,7 @@ const SignUp = () => {
         password: values.password,
       })
       .then((response) => {
+        setIsSubmit(false);
         toast({
           title: response.data.status,
           description: response.data.message,
@@ -67,6 +70,7 @@ const SignUp = () => {
         router.push(`/auth/verify-email?id=${id}`);
       })
       .catch((error) => {
+        setIsSubmit(false);
         toast({
           title: error.response.data.status,
           description: error.response.data.message,
@@ -170,6 +174,7 @@ const SignUp = () => {
                 </Box>
 
                 <button
+                  onClick={() => setIsSubmit(true)}
                   type="submit"
                   className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${
                     isSubmitting
@@ -178,11 +183,12 @@ const SignUp = () => {
                   }`}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? (
+                  {/* {isSubmitting ? (
                     <Spinner size={"sm"} color="white" />
                   ) : (
                     "Login"
-                  )}
+                  )} */}
+                  {isSubmit ? <Spinner /> : "Sign Up"}
                 </button>
                 <Stack mt={4}>
                   <Text align={"center"}>

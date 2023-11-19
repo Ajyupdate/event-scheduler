@@ -55,6 +55,7 @@ function VerifyEmail() {
           uniqueString: pin,
         })
         .then((response) => {
+          console.log(response);
           toast({
             title: response.data.status,
             description: response.data.message,
@@ -62,6 +63,7 @@ function VerifyEmail() {
             duration: 9000,
             isClosable: true,
           });
+          router.push(`/auth/sign-in`);
         })
         .catch((error) => {
           toast({

@@ -1,5 +1,7 @@
-import { Box, Checkbox, Flex, HStack, Text } from "@chakra-ui/react";
+import { Box, Checkbox, Flex, HStack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { convertTo12HourFormat } from "./helpers/FormatTime";
@@ -31,9 +33,12 @@ export default function TodoComponent({
   openTaskDetails,
   clickedDate,
 }: TodoComponentProps) {
+  const toast = useToast();
+  const router = useRouter();
   const date = new Date();
   const todaysDate = date.toDateString();
-
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [todos, setTodos] = useState<TodoProps[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false); // State to control the edit card
@@ -49,17 +54,18 @@ export default function TodoComponent({
   };
 
   useEffect(() => {
-    const requestDate = "Today";
-
     if (clickedDate) {
       const token = document.cookie.replace(
         /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
         "$1"
       );
 
+      if (!id) {
+        router.push("/auth/sign-in");
+      }
       axios
 
-        .get<TodoProps[]>(`${API_ENDPOINT}/tasks/ajy?date=${clickedDate}`, {
+        .get(`${API_ENDPOINT}/tasks/${id}?date=${clickedDate}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -67,9 +73,23 @@ export default function TodoComponent({
         .then((response) => {
           console.log(response);
           setTodos(response.data);
+          toast({
+            title: response.data.status,
+            description: response.data.message,
+            status: "success",
+            duration: 900,
+            isClosable: true,
+          });
         })
         .catch((error) => {
-          console.log(error);
+          toast({
+            title: error.response.data.status,
+            description: error.response.data.message,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          router.push("/auth/sign-in");
         });
     }
   }, [clickedDate]);
