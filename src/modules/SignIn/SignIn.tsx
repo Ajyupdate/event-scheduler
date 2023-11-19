@@ -14,10 +14,12 @@ import {
 import axios from "axios";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import * as yup from "yup";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 const LoginForm = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
   const router = useRouter();
   const toast = useToast();
 
@@ -37,12 +39,12 @@ const LoginForm = () => {
     axios
       .post(`${API_ENDPOINT}/auth/signin`, values)
       .then((response) => {
-        console.log(response);
+        setIsSubmit(false);
         const { token } = response.data;
-        console.log(token);
+        const id = response.data.data.name;
         // Store the token in a cookie
         document.cookie = `token=${token}; Path=/`;
-        console.log(document.cookie);
+
         toast({
           title: response.data.status,
           description: response.data.message,
@@ -50,10 +52,11 @@ const LoginForm = () => {
           duration: 9000,
           isClosable: true,
         });
-        // router.push("/");
+        router.push(`/?id=${id}`);
       })
       .catch((error) => {
         setSubmitting(false);
+        setIsSubmit(false);
         setErrors({ password: "Invalid credentials" });
         toast({
           title: "Error.",
@@ -126,15 +129,12 @@ const LoginForm = () => {
                   </Box>
                 </Box>
                 <button
+                  onClick={() => setIsSubmit(true)}
                   type="submit"
-                  className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${
-                    isSubmitting
-                      ? "opacity-75 cursor-not-allowed"
-                      : "opacity-100 cursor-pointer"
-                  }`}
-                  disabled={isSubmitting}
+                  className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded `}
+                  // disabled={isSubmitting}
                 >
-                  {isSubmitting ? <Spinner /> : "Login"}
+                  {isSubmit ? <Spinner /> : "Login"}
                 </button>
                 <Stack>
                   <Text align={"center"}>
