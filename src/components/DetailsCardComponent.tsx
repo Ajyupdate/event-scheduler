@@ -1,7 +1,10 @@
 import {
   Alert,
   AlertIcon,
-  Box, Flex, HStack, Icon,
+  Box,
+  Flex,
+  HStack,
+  Icon,
   Modal,
   ModalBody,
   ModalContent,
@@ -10,10 +13,11 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import ClockIcon from "../../public/clock-icon.svg";
@@ -33,8 +37,8 @@ interface ConfirmationModalProps {
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   isOpen,
   onClose,
-  onDelete, 
-  isLoading
+  onDelete,
+  isLoading,
 }) => {
   return (
     <Box>
@@ -47,8 +51,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             <button
               onClick={onDelete}
               type="button"
-              className="rounded-md	 px-2 py-2 text-red-700 bg-red-50 ml-2 font-bold">
-               {isLoading ?<Spinner/> : 'Delete'}
+              className="rounded-md	 px-2 py-2 text-red-700 bg-red-50 ml-2 font-bold"
+            >
+              {isLoading ? <Spinner /> : "Delete"}
             </button>
 
             <button onClick={onClose} className="ml-3">
@@ -61,51 +66,75 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 export interface DetailsCardProps {
-  todo: IDetailsCardprops ;
+  todo: IDetailsCardprops;
   onEditClick: any;
-  handleOpenCloseDetails: () => void
+  handleOpenCloseDetails: () => void;
 }
 export interface IDetailsCardprops {
-  title: string ;
-  _id: number ;
-  startTime: string ;
-  endTime: string ;
-  date: string ;
+  title: string;
+  _id: number;
+  startTime: string;
+  endTime: string;
+  date: string;
 }
-function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: DetailsCardProps) {
-  const toast = useToast()
+function DetailsCardComponent({
+  todo,
+  onEditClick,
+  handleOpenCloseDetails,
+}: DetailsCardProps) {
+  const token = document.cookie.replace(
+    /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
+  const router = useRouter();
+  const toast = useToast();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteTaskId, setDeleteTaskId] = useState<number>(todo._id);
-  const [successAlert, setSuccessAlert] = useState(false)
-  const [errorAlert, setErrorAlert] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const handleDelete = (taskId: number) =>{
-    setLoading(true)
-   
-    if(deleteTaskId){
-    axios.delete(`${API_ENDPOINT}/tasks/${deleteTaskId}`)
-    .then(response =>{
-      setLoading(false)
-      setSuccessAlert(true)
-      setErrorAlert(false)
-      toast({
-        title: 'Success.',
-        description: "Task added successfully.",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      })
-      window.location.reload();
-    })
-    .catch(error =>{
-      setLoading(false)
-      
-      setSuccessAlert(false)
-      setErrorAlert(true)
-      
-    })
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleDelete = (taskId: number) => {
+    setLoading(true);
+
+    if (deleteTaskId) {
+      axios
+        .delete(`${API_ENDPOINT}/tasks/${deleteTaskId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setLoading(false);
+          setSuccessAlert(true);
+          setErrorAlert(false);
+          toast({
+            title: "Success.",
+            description: "Task deleted successfully.",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          window.location.reload();
+        })
+        .catch((error) => {
+          setLoading(false);
+
+          setSuccessAlert(false);
+          setErrorAlert(true);
+
+          toast({
+            title: error.response.data.status,
+            description: error.response.data.message,
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+          if (error.response.status === 401) {
+            router.push("/auth/sign-in");
+          }
+        });
     }
-  }
+  };
   return (
     <Box
       maxWidth="400px"
@@ -115,24 +144,27 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
       boxShadow={{ md: "md", base: "none" }}
       p={4}
       bg="white"
-      position="relative">
-        {successAlert &&
-        <Alert status='success'>
-    <AlertIcon />
-    Task Deleted successfully
-  </Alert> }
+      position="relative"
+    >
+      {successAlert && (
+        <Alert status="success">
+          <AlertIcon />
+          Task Deleted successfully
+        </Alert>
+      )}
 
-  {errorAlert &&
-        <Alert status='error'>
-    <AlertIcon />
-    Data uploaded to the server. Fire on!
-  </Alert> }
-        <>
+      {errorAlert && (
+        <Alert status="error">
+          <AlertIcon />
+          Unable to delete!
+        </Alert>
+      )}
+      <>
         <ConfirmationModal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
           onDelete={() => handleDelete(deleteTaskId)}
-          isLoading = {loading}
+          isLoading={loading}
         />
       </>
       <Flex justifyContent="flex-end" display={{ md: "flex", base: "none" }}>
@@ -140,7 +172,7 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
           as={FaTimes}
           color="gray.500"
           cursor="pointer"
-          onClick={ handleOpenCloseDetails}
+          onClick={handleOpenCloseDetails}
         />
       </Flex>
 
@@ -163,14 +195,15 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
       </HStack>
 
       <Flex mt={8}>
-        <button 
-        onClick={() => {
-          // onOpen();
-          
-          setIsDeleteModalOpen(true);
-        }}
-        className="flex-1 bg-white hover:bg-dark-200 text-dark-500 hover:text-dark font-600 py-2 px-4 border border-grey-500 rounded">
-           {loading ?<Spinner/> : 'Delete'}
+        <button
+          onClick={() => {
+            // onOpen();
+
+            setIsDeleteModalOpen(true);
+          }}
+          className="flex-1 bg-white hover:bg-dark-200 text-dark-500 hover:text-dark font-600 py-2 px-4 border border-grey-500 rounded"
+        >
+          {loading ? <Spinner /> : "Delete"}
         </button>
 
         <button
@@ -178,8 +211,9 @@ function DetailsCardComponent({ todo, onEditClick,  handleOpenCloseDetails }: De
             onEditClick();
             // setIsVisible(false);
           }}
-          className="ml-3 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-         Edit
+          className="ml-3 flex-1 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+        >
+          Edit
         </button>
 
         {/* <Input placeholder="" size="md" type="time" /> */}
