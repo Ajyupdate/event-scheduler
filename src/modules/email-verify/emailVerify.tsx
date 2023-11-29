@@ -47,7 +47,6 @@ function VerifyEmail() {
         .required("PIN is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
       const { pin } = values;
       axios
         .post(`${API_ENDPOINT}/auth/verify-otp`, {
@@ -55,7 +54,6 @@ function VerifyEmail() {
           uniqueString: pin,
         })
         .then((response) => {
-          console.log(response);
           toast({
             title: response.data.status,
             description: response.data.message,
@@ -95,7 +93,6 @@ function VerifyEmail() {
       setShowResendComponent(false);
 
       setShowEmailAlert(false);
-      console.log(timerSeconds);
     }
   }, [showResendComponent, timerSeconds]);
 

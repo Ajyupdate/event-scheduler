@@ -130,7 +130,7 @@ ITodoEditCardProps) {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error.response.status);
+
         if (error.response.status === 401) {
           router.push("/auth/sign-in");
         }

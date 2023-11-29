@@ -44,18 +44,18 @@ const AddTask = ({ isOpen, onClose, openAddDrawer, closeAddDrawer, inputValue }:
       </Box>{" "}
 
       <Box display={{md: 'none', base: 'block'}}>
-      <Drawer size={"full"} isOpen={openAddDrawer} placement="right" onClose={closeDrawer}>
-      <DrawerOverlay>
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Add</DrawerHeader>
-          <DrawerBody>
-              <AddNewComponent inputValue={inputValue} isOpen={isOpen}  closeAddDrawer={ closeAddDrawer}
-          onClose={onClose}/>
-          </DrawerBody>
-        </DrawerContent>
-      </DrawerOverlay>
-    </Drawer>
+        <Drawer size={"full"} isOpen={openAddDrawer} placement="right" onClose={closeDrawer}>
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Add</DrawerHeader>
+            <DrawerBody>
+                <AddNewComponent inputValue={inputValue} isOpen={isOpen}  closeAddDrawer={ closeAddDrawer}
+            onClose={onClose}/>
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+        </Drawer>
       </Box>
     </Box>
   );
