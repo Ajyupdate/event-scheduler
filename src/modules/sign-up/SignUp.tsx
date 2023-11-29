@@ -49,7 +49,6 @@ const SignUp = () => {
       .required("Confirm Password is required"),
   });
   const handleSubmit = async (values: initialValuesProps) => {
-    console.log(values);
     axios
       .post(`${API_ENDPOINT}/auth/signup`, {
         name: values.username,

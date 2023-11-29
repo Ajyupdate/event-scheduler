@@ -34,8 +34,6 @@ const LoginForm = () => {
     values: any,
     { setSubmitting, setErrors }: any
   ) => {
-    console.log(values);
-
     axios
       .post(`${API_ENDPOINT}/auth/signin`, values)
       .then((response) => {
@@ -129,7 +127,7 @@ const LoginForm = () => {
                   </Box>
                 </Box>
                 <button
-                  onClick={() => setIsSubmit(true)}
+                  onClick={() => handleSubmit}
                   type="submit"
                   className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded `}
                   // disabled={isSubmitting}

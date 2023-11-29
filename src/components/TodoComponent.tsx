@@ -71,7 +71,6 @@ export default function TodoComponent({
           },
         })
         .then((response) => {
-          console.log(response);
           setTodos(response.data);
           toast({
             title: response.data.status,
@@ -86,7 +85,7 @@ export default function TodoComponent({
             title: error.response.data.status,
             description: error.response.data.message,
             status: "error",
-            duration: 9000,
+            duration: 500,
             isClosable: true,
           });
           router.push("/auth/sign-in");

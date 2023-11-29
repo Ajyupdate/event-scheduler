@@ -44,6 +44,11 @@ const AddNewComponent = ({
   const [value, onChange] = useState<Value>(new Date());
   const [preAlert, setPreAlert] = useState(true);
   const [loading, setLoading] = useState(false);
+
+  const token = document.cookie.replace(
+    /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
   const toggleCalendar = () => {
     setCalendarOpen(!calendarOpen);
   };
@@ -98,7 +103,11 @@ const AddNewComponent = ({
     setLoading(true);
 
     axios
-      .post(`${API_ENDPOINT}/tasks`, newTodoData)
+      .post(`${API_ENDPOINT}/tasks`, newTodoData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setLoading(false);
         window.location.reload();
@@ -112,7 +121,7 @@ const AddNewComponent = ({
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error);
+
         toast({
           title: "Error.",
           description:
