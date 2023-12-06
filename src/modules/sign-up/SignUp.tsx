@@ -8,7 +8,6 @@ import {
   Spinner,
   Stack,
   Text,
-  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -85,7 +84,7 @@ const SignUp = () => {
       minH={{ md: "100vh", base: "100vh" }}
       align={"center"}
       justify={"center"}
-      bg="blue.500"
+      // bg="blue.500"
     >
       <Stack
         spacing={8}
@@ -94,14 +93,16 @@ const SignUp = () => {
         py={12}
         px={6}
       >
-        <Stack align={"center"} color={"white"}>
-          <Heading fontSize={"4xl"}>LOGO</Heading>
+        <Stack align={"center"}>
+          <Heading as={"i"} fontSize={"4xl"}>
+            Event Scheduler
+          </Heading>
         </Stack>
 
-        <Box bg={useColorModeValue("white", "gray.50")} p={4}>
+        <Box borderRadius={"lg"} bg={"blue.700"} p={4} color={"white"}>
           <Center>
             {" "}
-            <Heading fontSize="3xl" fontWeight="medium" mt={8}>
+            <Heading fontSize="3xl" fontWeight="medium" mt={6} mb={8}>
               Sign up
             </Heading>
           </Center>
@@ -112,12 +113,12 @@ const SignUp = () => {
           >
             {({ isSubmitting }) => (
               <Form>
-                <Box marginBottom="2">
-                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Email
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="text"
                     name="email"
@@ -127,12 +128,12 @@ const SignUp = () => {
                   </Box>
                 </Box>
 
-                <Box marginBottom="2">
-                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Username
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="text"
                     name="username"
@@ -142,12 +143,12 @@ const SignUp = () => {
                   </Box>
                 </Box>
 
-                <Box marginBottom="2">
-                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Password
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="password"
                     name="password"
@@ -157,12 +158,12 @@ const SignUp = () => {
                   </Box>
                 </Box>
 
-                <Box marginBottom="2">
-                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Confirm Password
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="password"
                     name="confirmPassword"
@@ -172,30 +173,32 @@ const SignUp = () => {
                   </Box>
                 </Box>
 
-                <button
-                  onClick={() => setIsSubmit(true)}
-                  type="submit"
-                  className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${
-                    isSubmitting
-                      ? "opacity-75 cursor-not-allowed"
-                      : "opacity-100 cursor-pointer"
-                  }`}
-                  disabled={isSubmitting}
-                >
-                  {/* {isSubmitting ? (
+                <Box mx={{ md: 12 }}>
+                  <button
+                    onClick={() => setIsSubmit(true)}
+                    type="submit"
+                    className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded ${
+                      isSubmitting
+                        ? "opacity-75 cursor-not-allowed"
+                        : "opacity-100 cursor-pointer"
+                    }`}
+                    disabled={isSubmitting}
+                  >
+                    {/* {isSubmitting ? (
                     <Spinner size={"sm"} color="white" />
                   ) : (
                     "Login"
                   )} */}
-                  {isSubmit ? <Spinner /> : "Sign Up"}
-                </button>
-                <Stack mt={4}>
+                    {isSubmit ? <Spinner /> : "Sign Up"}
+                  </button>
+                </Box>
+                <Stack mt={4} fontSize={"small"}>
                   <Text align={"center"}>
                     Already have an account?{" "}
                     <Link
                       fontWeight={"bold"}
-                      href="../auth/sign-up"
-                      color={"blue.400"}
+                      href="../auth/sign-in"
+                      color={"blue.200"}
                     >
                       Sign in
                     </Link>
