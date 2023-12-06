@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import { FaTimes } from "react-icons/fa";
@@ -35,6 +36,8 @@ const AddNewComponent = ({
   closeAddDrawer,
   inputValue,
 }: TaskDrawerprops) => {
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const toast = useToast();
   const [task, setTask] = useState(inputValue);
 
@@ -96,7 +99,7 @@ const AddNewComponent = ({
     startTime: startTime,
     endTime: endTime,
     completed: false,
-    owner: "ajy",
+    owner: id,
   };
 
   const handleSave = () => {

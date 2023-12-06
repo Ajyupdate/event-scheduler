@@ -8,7 +8,6 @@ import {
   Spinner,
   Stack,
   Text,
-  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
@@ -38,8 +37,9 @@ const LoginForm = () => {
       .post(`${API_ENDPOINT}/auth/signin`, values)
       .then((response) => {
         setIsSubmit(false);
+        console.log(response);
         const { token } = response.data;
-        const id = response.data.data.name;
+        const id = response.data.data._id;
         // Store the token in a cookie
         document.cookie = `token=${token}; Path=/`;
 
@@ -47,7 +47,7 @@ const LoginForm = () => {
           title: response.data.status,
           description: response.data.message,
           status: "success",
-          duration: 9000,
+          duration: 500,
           isClosable: true,
         });
         router.push(`/?id=${id}`);
@@ -71,7 +71,7 @@ const LoginForm = () => {
       minH={{ md: "100vh", base: "100vh" }}
       align={"center"}
       justify={"center"}
-      bg="blue.500"
+      // bg="blue.500"
     >
       <Stack
         spacing={8}
@@ -80,14 +80,16 @@ const LoginForm = () => {
         py={12}
         px={6}
       >
-        <Stack align={"center"} color={"white"}>
-          <Heading fontSize={"4xl"}>LOGO</Heading>
+        <Stack align={"center"}>
+          <Heading as={"i"} fontSize={"4xl"}>
+            Event Scheduler
+          </Heading>
         </Stack>
 
-        <Box bg={useColorModeValue("white", "gray.50")} p={4}>
+        <Box borderRadius={"lg"} bg={"blue.700"} p={4} color={"white"}>
           <Center>
             {" "}
-            <Heading fontSize="3xl" fontWeight="medium" mt={8}>
+            <Heading fontSize="xl" fontWeight="medium" mt={6} mb={8}>
               Sign In
             </Heading>
           </Center>
@@ -98,12 +100,12 @@ const LoginForm = () => {
           >
             {({ isSubmitting }) => (
               <Form>
-                <Box marginBottom="2">
-                  <Heading mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Email
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="text"
                     name="email"
@@ -112,12 +114,12 @@ const LoginForm = () => {
                     <ErrorMessage name="email" />
                   </Box>
                 </Box>
-                <Box marginBottom="2">
-                  <Heading mt={4} mb={2} fontWeight={"medium"} fontSize={"md"}>
+                <Box marginBottom="2" mx={{ md: 12 }}>
+                  <Heading mt={4} mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Password
                   </Heading>
                   <Field
-                    variant={"filled"}
+                    // variant={"filled"}
                     as={Input}
                     type="password"
                     name="password"
@@ -126,21 +128,24 @@ const LoginForm = () => {
                     <ErrorMessage name="password" />
                   </Box>
                 </Box>
-                <button
-                  onClick={() => handleSubmit}
-                  type="submit"
-                  className={`mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded `}
-                  // disabled={isSubmitting}
-                >
-                  {isSubmit ? <Spinner /> : "Login"}
-                </button>
-                <Stack>
+                <Box mx={{ md: 12 }}>
+                  <button
+                    onClick={() => handleSubmit}
+                    type="submit"
+                    className={` mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded `}
+                    // disabled={isSubmitting}
+                  >
+                    {isSubmit ? <Spinner /> : "Login"}
+                  </button>
+                </Box>
+
+                <Stack mt={2} fontSize={"small"}>
                   <Text align={"center"}>
                     Dont have an account?{" "}
                     <Link
-                      fontWeight={"bold"}
+                      // fontWeight={"bold"}
                       href="../auth/sign-up"
-                      color={"blue.400"}
+                      color={"blue.200"}
                     >
                       Sign up
                     </Link>
@@ -153,9 +158,9 @@ const LoginForm = () => {
 
                       <Text align={"center"}>
                         <Link
-                          fontWeight={"bold"}
+                          // fontWeight={"bold"}
                           href="../auth/sign-in?query=admin"
-                          color={"blue.400"}
+                          color={"blue.200"}
                         >
                           Forgotten Password?
                         </Link>
