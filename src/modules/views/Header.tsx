@@ -41,7 +41,8 @@ const NavLink = (props: Props) => {
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
-      href={"#"}>
+      href={"#"}
+    >
       {children}
     </Box>
   );
@@ -58,11 +59,12 @@ const Header: React.FC = () => {
           pb={2}
           h={14}
           // alignItems={"center"}
-          justifyContent={"space-between"}>
+          justifyContent={"space-between"}
+        >
           <HStack spacing={8} alignItems={"center"}>
             <Box>
               <Heading fontWeight={{ base: 700, md: 700 }} fontSize={"24px"}>
-                ToDo
+                Event Scheduler
               </Heading>
             </Box>
           </HStack>
@@ -82,7 +84,8 @@ const Header: React.FC = () => {
                 rounded={"full"}
                 variant={"link"}
                 cursor={"pointer"}
-                minW={0}>
+                minW={0}
+              >
                 <Avatar
                   size={"sm"}
                   src={
