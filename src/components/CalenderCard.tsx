@@ -2,19 +2,18 @@ import { Box } from "@chakra-ui/react";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
- import "./MonthCalender.css";
+import "./MonthCalender.css";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
-function CalenderCard() {
-  // const [date, setDate] = useState<Date>(new Date());
-  const [value, onChange] = useState<Value>(new Date());
+interface Icalenderprops {
+  onDateClick: (clickedDate: string) => void;
+}
 
-  // const onChange = (newDate: Date) => {
-  //   setDate(newDate);
-  //   console.log(newDate);
-  // };
+function CalenderCard({ onDateClick }: Icalenderprops) {
+  //
+  const [value, onChange] = useState<Value>(new Date());
 
   const formatShortWeekday = (locale: string | undefined, date: Date) => {
     const options = { weekday: "short" as "short" };
@@ -37,6 +36,7 @@ function CalenderCard() {
       >
         <Calendar
           onChange={onChange}
+          onClickDay={() => console.log(value)}
           value={value}
           formatShortWeekday={formatShortWeekday}
         />

@@ -37,9 +37,10 @@ const LoginForm = () => {
       .post(`${API_ENDPOINT}/auth/signin`, values)
       .then((response) => {
         setIsSubmit(false);
-        console.log(response);
+
         const { token } = response.data;
         const id = response.data.data._id;
+        const username = response.data.data.name;
         // Store the token in a cookie
         document.cookie = `token=${token}; Path=/`;
 
@@ -50,7 +51,7 @@ const LoginForm = () => {
           duration: 500,
           isClosable: true,
         });
-        router.push(`/?id=${id}`);
+        router.push(`/?id=${id}&name=${username}`);
       })
       .catch((error) => {
         setSubmitting(false);

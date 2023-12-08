@@ -1,7 +1,3 @@
-
-
-
-
 import { Box, Card, Center, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -12,24 +8,14 @@ export interface DateScrollProps {
 const DateScroll = ({ onDateClick }: DateScrollProps) => {
   const today = new Date();
   const currentMonth = today.getMonth();
-  const totalDaysInMonth = new Date(today.getFullYear(), currentMonth + 1, 0).getDate();
+  const totalDaysInMonth = new Date(
+    today.getFullYear(),
+    currentMonth + 1,
+    0
+  ).getDate();
 
   const [clickedCard, setClickedCard] = useState<number | null>(null);
-  const containerRef =useRef<HTMLDivElement | null>(null);
-
-  // useEffect(() => {
-  //   // Calculate the initial scroll position for today's date
-  //   const todayIndex = today.getDate() - 1;
-  //   const containerWidth = containerRef.current.clientWidth;
-  //   const cardWidth = 80; // Adjust the card width as needed for mobile
-
-  //   const visibleCardsCount = Math.floor(containerWidth / cardWidth);
-  //   const initialScrollPosition = todayIndex * cardWidth - (visibleCardsCount / 2) * cardWidth;
-
-  //   if (containerRef.current) {
-  //     containerRef.current.scrollLeft = initialScrollPosition;
-  //   }
-  // }, []);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const containerElement = containerRef.current; // Store a reference to the DOM element
@@ -37,14 +23,14 @@ const DateScroll = ({ onDateClick }: DateScrollProps) => {
       const todayIndex = today.getDate() - 1;
       const containerWidth = containerElement.clientWidth;
       const cardWidth = 80; // Adjust the card width as needed for mobile
-  
+
       const visibleCardsCount = Math.floor(containerWidth / cardWidth);
-      const initialScrollPosition = todayIndex * cardWidth - (visibleCardsCount / 2) * cardWidth;
-  
+      const initialScrollPosition =
+        todayIndex * cardWidth - (visibleCardsCount / 2) * cardWidth;
+
       containerElement.scrollLeft = initialScrollPosition;
     }
   }, []);
-  
 
   const handleCardClick = (dateNumber: number) => {
     const currentDate = new Date(today.getFullYear(), currentMonth, dateNumber);
@@ -58,31 +44,36 @@ const DateScroll = ({ onDateClick }: DateScrollProps) => {
     setClickedCard(dateNumber);
   };
 
-  const days = Array.from({ length: totalDaysInMonth }, (_, index) => index + 1);
+  const days = Array.from(
+    { length: totalDaysInMonth },
+    (_, index) => index + 1
+  );
 
   return (
-    
     <div
-    className="w-80 md:w-full"
+      className="w-80 md:w-full"
       ref={containerRef}
       style={{
         display: "flex",
         overflowX: "auto",
         //  width: "100%", // Set a fixed width for the container
         whiteSpace: "nowrap",
-        
       }}
     >
       {days.map((dateNumber) => {
-        const currentDate = new Date(today.getFullYear(), currentMonth, dateNumber);
+        const currentDate = new Date(
+          today.getFullYear(),
+          currentMonth,
+          dateNumber
+        );
         const dayName = currentDate.toLocaleDateString("en-US", {
           weekday: "short",
         });
-        const isCurrentDate = currentDate.toDateString() === today.toDateString();
+        const isCurrentDate =
+          currentDate.toDateString() === today.toDateString();
 
         return (
           <Box
-          
             key={dateNumber}
             width="80px" // Adjust the card width as needed for mobile
             height="100px"
@@ -94,12 +85,24 @@ const DateScroll = ({ onDateClick }: DateScrollProps) => {
             fontSize="lg"
           >
             <Card
-              bg={dateNumber === clickedCard ? "blue.200" : isCurrentDate ? "#3F5BF6" : ""}
+              bg={
+                dateNumber === clickedCard
+                  ? "blue.200"
+                  : isCurrentDate
+                  ? "#3F5BF6"
+                  : ""
+              }
               py={2}
               shadow={"sm"}
               px={4}
               ml={4}
-              color={dateNumber === clickedCard ? "white" : isCurrentDate ? "white" : ""}
+              color={
+                dateNumber === clickedCard
+                  ? "white"
+                  : isCurrentDate
+                  ? "white"
+                  : ""
+              }
               variant={"outline"}
               onClick={() => handleCardClick(dateNumber)}
             >

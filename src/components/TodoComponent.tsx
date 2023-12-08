@@ -39,6 +39,7 @@ export default function TodoComponent({
   const todaysDate = date.toDateString();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+
   const [todos, setTodos] = useState<TodoProps[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false); // State to control the edit card
@@ -72,6 +73,7 @@ export default function TodoComponent({
         })
         .then((response) => {
           setTodos(response.data);
+
           toast({
             title: response.data.status,
             description: response.data.message,
