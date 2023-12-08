@@ -36,7 +36,6 @@ function CalenderCard({ onDateClick }: Icalenderprops) {
       >
         <Calendar
           onChange={onChange}
-          onClickDay={() => console.log(value)}
           value={value}
           formatShortWeekday={formatShortWeekday}
         />

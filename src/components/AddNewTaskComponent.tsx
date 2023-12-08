@@ -192,7 +192,7 @@ const AddNewComponent = ({
             }}
           >
             <HStack fontSize={"xs"} height={4}>
-              <Image src={CalenderIcon} alt="calender" /> <Text>Today</Text>
+              <Image src={CalenderIcon} alt="calender" />
             </HStack>
           </button>
         </Box>
