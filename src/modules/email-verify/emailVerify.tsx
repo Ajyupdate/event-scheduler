@@ -4,10 +4,12 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  Center,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Link,
   PinInput,
   PinInputField,
@@ -98,7 +100,7 @@ function VerifyEmail() {
 
   function EmailAlert() {
     return (
-      <Alert status="success" bg={"teal.50"} rounded={"lg"}>
+      <Alert status="success" bg={"bg-blue-70"} rounded={"lg"}>
         <AlertIcon />
         <Box>
           <AlertTitle fontWeight={"semibold"}>
@@ -106,7 +108,7 @@ function VerifyEmail() {
             <Text as="span" fontWeight={"bold"}>
               ajy
             </Text>{" "}
-            <Text fontWeight={"bold"} color={"teal.500"} as={"span"}>
+            <Text fontWeight={"bold"} color={"bg-blue-700"} as={"span"}>
               Change email?
             </Text>
           </AlertTitle>
@@ -121,7 +123,9 @@ function VerifyEmail() {
   return (
     <Flex minH={"100vh"} align={"center"} justify={"center"} bg="gray.50">
       <Stack spacing={8} mx={"auto"} mt={4} maxW={"lg"} py={12} px={6}>
-        <Box>Header</Box>
+        <Heading fontSize={"2xl"}>
+          <Center>Verify Your Email Address</Center>
+        </Heading>
         <Box
           rounded={"lg"}
           bg="white"
@@ -165,7 +169,7 @@ function VerifyEmail() {
                 <button
                   disabled={formik.isSubmitting}
                   type="submit"
-                  className="bg-teal-600 hover:bg-teal-500 text-white font-semibold py-2 px-4 rounded"
+                  className="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded"
                 >
                   {formik.isSubmitting ? (
                     <Spinner size={"sm"} color="white" />
@@ -193,7 +197,7 @@ function VerifyEmail() {
                     as={"span"}
                     //   onClick={showResendOtp}
                     cursor={"default"}
-                    color={"teal.500"}
+                    color={"blue.500"}
                   >
                     Resend OTP
                   </Text>

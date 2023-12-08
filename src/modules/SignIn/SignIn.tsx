@@ -5,7 +5,6 @@ import {
   Heading,
   Input,
   Link,
-  Spinner,
   Stack,
   Text,
   useToast,
@@ -48,7 +47,7 @@ const LoginForm = () => {
           title: response.data.status,
           description: response.data.message,
           status: "success",
-          duration: 500,
+          duration: 1500,
           isClosable: true,
         });
         router.push(`/?id=${id}&name=${username}`);
@@ -73,6 +72,7 @@ const LoginForm = () => {
       align={"center"}
       justify={"center"}
       // bg="blue.500"
+      bg="gray.50"
     >
       <Stack
         spacing={8}
@@ -82,12 +82,10 @@ const LoginForm = () => {
         px={6}
       >
         <Stack align={"center"}>
-          <Heading as={"i"} fontSize={"4xl"}>
-            Event Scheduler
-          </Heading>
+          <Heading fontSize={"2xl"}>Event Scheduler</Heading>
         </Stack>
 
-        <Box borderRadius={"lg"} bg={"blue.700"} p={4} color={"white"}>
+        <Box borderRadius={"lg"} bg={"white"} p={4} color={"black"}>
           <Center>
             {" "}
             <Heading fontSize="xl" fontWeight="medium" mt={6} mb={8}>
@@ -136,7 +134,7 @@ const LoginForm = () => {
                     className={` mt-4 bg-blue-500 w-full hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded `}
                     // disabled={isSubmitting}
                   >
-                    {isSubmit ? <Spinner /> : "Login"}
+                    {"Login"}
                   </button>
                 </Box>
 
@@ -146,12 +144,12 @@ const LoginForm = () => {
                     <Link
                       // fontWeight={"bold"}
                       href="../auth/sign-up"
-                      color={"blue.200"}
+                      color={"blue.500"}
                     >
                       Sign up
                     </Link>
                   </Text>
-                  {!params && (
+                  {/* {!params && (
                     <Box>
                       <Flex justify={"center"} align={"center"}>
                         OR
@@ -161,13 +159,13 @@ const LoginForm = () => {
                         <Link
                           // fontWeight={"bold"}
                           href="../auth/sign-in?query=admin"
-                          color={"blue.200"}
+                          color={"blue.500"}
                         >
                           Forgotten Password?
                         </Link>
                       </Text>
                     </Box>
-                  )}
+                  )} */}
                 </Stack>
               </Form>
             )}

@@ -5,7 +5,6 @@ import {
   Heading,
   Input,
   Link,
-  Spinner,
   Stack,
   Text,
   useToast,
@@ -85,6 +84,7 @@ const SignUp = () => {
       align={"center"}
       justify={"center"}
       // bg="blue.500"
+      bg="gray.50"
     >
       <Stack
         spacing={8}
@@ -94,17 +94,15 @@ const SignUp = () => {
         px={6}
       >
         <Stack align={"center"}>
-          <Heading as={"i"} fontSize={"4xl"}>
-            Event Scheduler
-          </Heading>
+          <Heading fontSize={"2xl"}>Sign Up</Heading>
         </Stack>
 
-        <Box borderRadius={"lg"} bg={"blue.700"} p={4} color={"white"}>
+        <Box borderRadius={"lg"} bg="white" p={4} color={"black"}>
           <Center>
             {" "}
-            <Heading fontSize="3xl" fontWeight="medium" mt={6} mb={8}>
+            {/* <Heading fontSize="2xl" fontWeight="medium" mt={6} mb={8}>
               Sign up
-            </Heading>
+            </Heading> */}
           </Center>
           <Formik
             initialValues={initialValues}
@@ -118,7 +116,8 @@ const SignUp = () => {
                     Email
                   </Heading>
                   <Field
-                    // variant={"filled"}
+                    // colorScheme={"teal"}
+                    // variant={"flushed"}
                     as={Input}
                     type="text"
                     name="email"
@@ -189,7 +188,7 @@ const SignUp = () => {
                   ) : (
                     "Login"
                   )} */}
-                    {isSubmit ? <Spinner /> : "Sign Up"}
+                    {"Sign Up"}
                   </button>
                 </Box>
                 <Stack mt={4} fontSize={"small"}>
@@ -198,7 +197,7 @@ const SignUp = () => {
                     <Link
                       fontWeight={"bold"}
                       href="../auth/sign-in"
-                      color={"blue.200"}
+                      color={"blue.500"}
                     >
                       Sign in
                     </Link>

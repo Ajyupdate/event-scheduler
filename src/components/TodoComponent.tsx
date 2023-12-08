@@ -75,7 +75,7 @@ export default function TodoComponent({
           setTodos(response.data);
 
           toast({
-            title: response.data.status,
+            title: "Success",
             description: response.data.message,
             status: "success",
             duration: 900,
