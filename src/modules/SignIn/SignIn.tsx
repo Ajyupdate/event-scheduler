@@ -99,7 +99,7 @@ const LoginForm = () => {
           >
             {({ isSubmitting }) => (
               <Form>
-                <Box marginBottom="2" mx={{ md: 12 }}>
+                <Box marginBottom="2" px={{ base: 2, md: 4 }}>
                   <Heading mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Email
                   </Heading>
@@ -113,7 +113,7 @@ const LoginForm = () => {
                     <ErrorMessage name="email" />
                   </Box>
                 </Box>
-                <Box marginBottom="2" mx={{ md: 12 }}>
+                <Box marginBottom="2" px={{ base: 2, md: 4 }}>
                   <Heading mt={4} mb={2} fontWeight={"medium"} fontSize={"sm"}>
                     Password
                   </Heading>
@@ -127,7 +127,7 @@ const LoginForm = () => {
                     <ErrorMessage name="password" />
                   </Box>
                 </Box>
-                <Box mx={{ md: 12 }}>
+                <Box px={{ base: 2, md: 4 }}>
                   <button
                     onClick={() => handleSubmit}
                     type="submit"
